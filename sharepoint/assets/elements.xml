@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+   <ListInstance 
+           FeatureId="00bfea71-52d4-45b3-b544-b1c71b620109"
+           Title="Frequently Asked Questions" 
+           Description=""
+           TemplateType="100"
+           Url="Lists/FAQ"
+           OnQuickLaunch = "False">
+   </ListInstance> 
+</Elements>
