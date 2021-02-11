@@ -1,0 +1,30 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+.faqSpFxClientSideWebPart {
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+ 
+  .head {
+    max-width: 100%;
+    padding: 15px 0px 15px 10px;
+    background-color: #0178d9; 
+  }  
+
+  .head h1, .head span {
+    color: white;
+    font-weight: lighter;
+  }
+  
+  .head span{
+    font-size: .9em;
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 0px auto;
+  }
+
+  
+}
