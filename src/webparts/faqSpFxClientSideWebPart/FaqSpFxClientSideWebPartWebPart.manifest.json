@@ -9,7 +9,7 @@
   "supportedHosts": ["SharePointWebPart"],
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
-    "group": { "default": "Other" },
+    "group": { "default": "Bryan Awesome WebParts" },
     "title": { "default": "FAQ SPFx Client Side Web Part" },
     "description": { "default": "FAQ SPFx Client Side Web Part description" },
     "officeFabricIconFontName": "UnknownSolid",
@@ -17,7 +17,7 @@
       "title": "Frequently Asked Questions",
       "description": "FAQ SPFx Client Side Web Part",
       "siteURL": "https://bksdevsite.sharepoint.com",
-      "list": "Frequently Asked Questions",
+      "list": "Frequently Asked Questions"
     }
   }]
 }
