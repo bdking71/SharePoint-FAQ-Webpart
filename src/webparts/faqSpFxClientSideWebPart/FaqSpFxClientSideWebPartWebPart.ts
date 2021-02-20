@@ -12,8 +12,9 @@
   import * as strings from 'FaqSpFxClientSideWebPartWebPartStrings';
   import FaqSpFxClientSideWebPart from './components/FaqSpFxClientSideWebPart';
   import { IFaqSpFxClientSideWebPartProps } from './components/IFaqSpFxClientSideWebPartProps';
+  import {Environment,EnvironmentType} from '@microsoft/sp-core-library';
 
-//#endregion
+  //#endregion
 
 //#region [interfaces]
   
@@ -22,6 +23,17 @@
     description: string;
     siteURL: string;
     list: string; 
+  }
+
+  export interface ISPLists {
+    value: ISPList[];
+  }
+  
+  export interface ISPList {
+    Id: number;
+    Title: string; 
+    Answer: string;
+    categor: string; 
   }
 
 //#endregion  
@@ -39,14 +51,37 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
         }
       );
       ReactDom.render(element, this.domElement);
+      this._renderFAQItemsAsync();
     }
 
   //#endregion
 
   //#region [AsyncCode]
+
+    private _renderFAQItemsAsync(): void {
+      if (Environment.type == EnvironmentType.SharePoint ||  
+          Environment.type == EnvironmentType.ClassicSharePoint) {
+          this._getFAQData()
+            .then((response) => {
+            // this._renderCSOArticles(response.value);
+            });
+      } 
+    }
+
   //#endregion
 
   //#region [QueryData]
+
+    private _getFAQData(): Promise<ISPLists> {
+      let restQuery = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('Frequently Asked Questions')/items?
+      &$select=Id,Title`;
+      console.log(restQuery);
+      return this.context.spHttpClient.get(restQuery ,SPHttpClient.configurations.v1)
+        .then((response: SPHttpClientResponse) => {
+          return response.json();
+        });   
+    }
+
   //#endregion
 
   //#region [GenericCode]

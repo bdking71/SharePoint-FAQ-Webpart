@@ -2,18 +2,18 @@
 
 .faqSpFxClientSideWebPart {
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
  
   .head {
     max-width: 100%;
     padding: 15px 0px 15px 10px;
-    background-color: #0178d9; 
+    border-bottom: 1px solid black;
   }  
 
   .head h1, .head span {
-    color: white;
+    width: 100%;
     font-weight: lighter;
   }
   

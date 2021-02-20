@@ -7,10 +7,11 @@ export default class FaqSpFxClientSideWebPart extends React.Component<IFaqSpFxCl
   public render(): React.ReactElement<IFaqSpFxClientSideWebPartProps> {
     return (
       <div className={ styles.faqSpFxClientSideWebPart }>
-        <div className={styles.head}><h1>{escape(this.props.title)}</h1><span>{escape(this.props.description)}</span></div>
-        <div className={styles.container}>
-
+        <div className={styles.head}>
+          <h1>{escape(this.props.title)}</h1>
+          <span>{escape(this.props.description)}</span>
         </div>
+        <div className={styles.container}></div>
       </div>
     );
   }
