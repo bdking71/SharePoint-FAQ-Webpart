@@ -3,7 +3,7 @@
   "solution": {
     "name": "FAQ SPFx Client Side WebPart",
     "id": "a4b9361c-b4fd-48c0-9b7f-b52eff7b1289",
-    "version": "2021.02.11.1440",
+    "version": "2021.02.20.1041",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
     "features": [{

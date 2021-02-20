@@ -3,18 +3,30 @@
 */
 //#region [imports]
   
-  import * as React from 'react';
-  import * as ReactDom from 'react-dom';
-  import { Version } from '@microsoft/sp-core-library';
-  import { IPropertyPaneConfiguration, PropertyPaneTextField} from '@microsoft/sp-property-pane';
-  import {SPHttpClient, SPHttpClientResponse, SPHttpClientConfiguration} from '@microsoft/sp-http';
-  import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-  import * as strings from 'FaqSpFxClientSideWebPartWebPartStrings';
-  import FaqSpFxClientSideWebPart from './components/FaqSpFxClientSideWebPart';
-  import { IFaqSpFxClientSideWebPartProps } from './components/IFaqSpFxClientSideWebPartProps';
-  import {Environment,EnvironmentType} from '@microsoft/sp-core-library';
+  import * as React 
+    from 'react';
+  import * as ReactDom 
+    from 'react-dom';
+  import * as strings 
+    from 'FaqSpFxClientSideWebPartWebPartStrings';
+  import { Version } 
+    from '@microsoft/sp-core-library';
+  import { IPropertyPaneConfiguration, PropertyPaneTextField} 
+    from '@microsoft/sp-property-pane';
+  import {SPHttpClient, SPHttpClientResponse, SPHttpClientConfiguration} 
+    from '@microsoft/sp-http';
+  import { BaseClientSideWebPart } 
+    from '@microsoft/sp-webpart-base';
+  import {Environment,EnvironmentType} 
+    from '@microsoft/sp-core-library';    
+  import FaqSpFxClientSideWebPart 
+    from './components/FaqSpFxClientSideWebPart';
+  import {IFaqSpFxClientSideWebPartProps} 
+    from './components/IFaqSpFxClientSideWebPartProps';
+  import styles 
+    from './components/FaqSpFxClientSideWebPart.module.scss';
 
-  //#endregion
+ //#endregion
 
 //#region [interfaces]
   
@@ -32,7 +44,7 @@
   export interface ISPList {
     Id: number;
     Title: string; 
-    Answer: string;
+    Answers: string;
     categor: string; 
   }
 
@@ -53,6 +65,18 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
       ReactDom.render(element, this.domElement);
       this._renderFAQItemsAsync();
     }
+  
+    private _renderFAQs(items: ISPList[]): void {
+      const FAQContainer: HTMLElement = document.getElementById("FAQs"); 
+      var htmlout : string = "";
+      items.forEach((item: ISPList) => {
+        htmlout += `<div class="${styles.row}">
+                      <div class="${styles.question}">${item.Title}</div>
+                      <div class="${styles.answer}">${item.Answers}</div>
+                    </div>`;
+      });
+      FAQContainer.innerHTML = htmlout;
+    }
 
   //#endregion
 
@@ -63,7 +87,7 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
           Environment.type == EnvironmentType.ClassicSharePoint) {
           this._getFAQData()
             .then((response) => {
-            // this._renderCSOArticles(response.value);
+              this._renderFAQs(response.value);
             });
       } 
     }
@@ -74,7 +98,7 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
 
     private _getFAQData(): Promise<ISPLists> {
       let restQuery = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('Frequently Asked Questions')/items?
-      &$select=Id,Title`;
+      &$select=Id,Title,Answers,Category`;
       console.log(restQuery);
       return this.context.spHttpClient.get(restQuery ,SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
