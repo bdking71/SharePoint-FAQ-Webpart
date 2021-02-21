@@ -1,30 +1,30 @@
 /* 
-   https://bksdevsite.sharepoint.com/_layouts/15/workbench.aspx 
+  https://bksdevsite.sharepoint.com/_layouts/15/workbench.aspx 
+
+  npm install jquery@2
+  npm install jqueryui
+
+  npm install @types/jquery@2 --save-dev
+  npm install @types/jqueryui --save-dev
+
 */
+
 //#region [imports]
   
-  import * as React 
-    from 'react';
-  import * as ReactDom 
-    from 'react-dom';
-  import * as strings 
-    from 'FaqSpFxClientSideWebPartWebPartStrings';
-  import { Version } 
-    from '@microsoft/sp-core-library';
-  import { IPropertyPaneConfiguration, PropertyPaneTextField} 
-    from '@microsoft/sp-property-pane';
-  import {SPHttpClient, SPHttpClientResponse, SPHttpClientConfiguration} 
-    from '@microsoft/sp-http';
-  import { BaseClientSideWebPart } 
-    from '@microsoft/sp-webpart-base';
-  import {Environment,EnvironmentType} 
-    from '@microsoft/sp-core-library';    
-  import FaqSpFxClientSideWebPart 
-    from './components/FaqSpFxClientSideWebPart';
-  import {IFaqSpFxClientSideWebPartProps} 
-    from './components/IFaqSpFxClientSideWebPartProps';
-  import styles 
-    from './components/FaqSpFxClientSideWebPart.module.scss';
+  import * as React from 'react';
+  import * as ReactDom from 'react-dom';
+  import * as strings from 'FaqSpFxClientSideWebPartWebPartStrings';
+  import * as jQuery from 'jquery';
+  import 'jqueryui';
+  import { Version } from '@microsoft/sp-core-library';
+  import { IPropertyPaneConfiguration, PropertyPaneTextField} from '@microsoft/sp-property-pane';
+  import {SPHttpClient, SPHttpClientResponse, SPHttpClientConfiguration} from '@microsoft/sp-http';
+  import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+  import {Environment,EnvironmentType} from '@microsoft/sp-core-library';    
+  import FaqSpFxClientSideWebPart from './components/FaqSpFxClientSideWebPart';
+  import {IFaqSpFxClientSideWebPartProps} from './components/IFaqSpFxClientSideWebPartProps';
+  import styles from './components/FaqSpFxClientSideWebPart.module.scss';
+  import { SPComponentLoader } from '@microsoft/sp-loader';
 
  //#endregion
 
@@ -45,12 +45,20 @@
     Id: number;
     Title: string; 
     Answers: string;
-    categor: string; 
   }
 
 //#endregion  
 
 export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPart<IFaqSpFxClientSideWebPartWebPartProps> {
+
+  //#region [constructor]  
+
+    public constructor() {
+      super();
+      SPComponentLoader.loadCss('https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css');
+    }
+  
+    //#endregion  
 
   //#region [DisplayCode]   
   
@@ -68,14 +76,26 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
   
     private _renderFAQs(items: ISPList[]): void {
       const FAQContainer: HTMLElement = document.getElementById("FAQs"); 
-      var htmlout : string = "";
+      var htmlout : string = `<div class="accordion">`;
       items.forEach((item: ISPList) => {
-        htmlout += `<div class="${styles.row}">
-                      <div class="${styles.question}">${item.Title}</div>
-                      <div class="${styles.answer}">${item.Answers}</div>
-                    </div>`;
+        htmlout += `<h3>${item.Title}</h2>
+                      <div>
+                        <p>${item.Answers}</p>
+                      </div>`;           
       });
+      htmlout += `</div>`;
       FAQContainer.innerHTML = htmlout;
+      
+      const accordionOptions: JQueryUI.AccordionOptions = {
+        animate: true,
+        collapsible: false,
+        icons: {
+          header: 'ui-icon-circle-arrow-e',
+          activeHeader: 'ui-icon-circle-arrow-s'
+        }
+      };
+
+      jQuery('.accordion', this.domElement).accordion(accordionOptions);
     }
 
   //#endregion
@@ -83,13 +103,10 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
   //#region [AsyncCode]
 
     private _renderFAQItemsAsync(): void {
-      if (Environment.type == EnvironmentType.SharePoint ||  
-          Environment.type == EnvironmentType.ClassicSharePoint) {
-          this._getFAQData()
-            .then((response) => {
-              this._renderFAQs(response.value);
-            });
-      } 
+      this._getFAQData()
+        .then((response) => {
+          this._renderFAQs(response.value);
+        });
     }
 
   //#endregion
@@ -97,8 +114,7 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
   //#region [QueryData]
 
     private _getFAQData(): Promise<ISPLists> {
-      let restQuery = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('Frequently Asked Questions')/items?
-      &$select=Id,Title,Answers,Category`;
+      let restQuery = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('Frequently Asked Questions')/items?&$select=Id, Title, Answers`;
       console.log(restQuery);
       return this.context.spHttpClient.get(restQuery ,SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
@@ -138,26 +154,7 @@ export default class FaqSpFxClientSideWebPartWebPart extends BaseClientSideWebPa
                 ]
               }
             ]
-          },          
-          {
-            header: {
-              description: strings.DataConnectionDescription
-            },
-            groups: [
-              {
-                groupName: strings.DataConnectionGroupName,
-                groupFields: [
-                  PropertyPaneTextField('Site URL', {
-                    label: strings.SiteURLLabel
-                  }),
-                  PropertyPaneTextField('List Name', {
-                    label: strings.ListLabel
-                  })
-                ]
-              }
-            ]
           }
-
         ]
       };
     }
