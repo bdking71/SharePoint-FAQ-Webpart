@@ -3,14 +3,15 @@
   "solution": {
     "name": "FAQ SPFx Client Side WebPart",
     "id": "a4b9361c-b4fd-48c0-9b7f-b52eff7b1289",
-    "version": "2021.02.20.1828",
+    "version": "2021.02.24.1715",
     "includeClientSideAssets": true,
     "isDomainIsolated": false,
+    "iconPath": "icons/AppIcon.png",
     "features": [{
       "title": "FAQ Features",
       "description": "Feature provisioning such as Site Columns, List, Libraries, etc required by the FAQ Client Site Webpart",
       "id": "02437947-ed22-4834-ac55-fd65ae5fa755",    
-      "version": "2021.02.20.1828",
+      "version": "2021.02.24.1715",
       "assets": {
         "elementManifests": [
           "elements.xml"

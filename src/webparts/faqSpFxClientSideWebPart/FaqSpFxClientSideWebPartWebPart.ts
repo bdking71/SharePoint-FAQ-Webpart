@@ -1,6 +1,10 @@
 /* 
   https://bksdevsite.sharepoint.com/_layouts/15/workbench.aspx 
 
+  ICON Reference: 
+  https://thechriskent.com/2017/06/19/sharepoint-framework-app-icon/
+  https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/basics/configure-web-part-icon
+
   npm install jquery@2
   npm install jqueryui
 
