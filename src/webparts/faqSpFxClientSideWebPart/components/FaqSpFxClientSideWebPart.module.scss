@@ -1,44 +1,42 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
+$default-font-family: Verdana, Geneva, Tahoma, sans-serif;
+$default-font-size: 13px; 
+$default-width: 100%;
+$default-max-width: 100%;
+
 .faqSpFxClientSideWebPart {
   text-align: left;
-  font-size: 13px;
+  font-size: $default-font-size;
   font-weight: normal;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
- 
+  font-family: $default-font-family; 
   .head {
-    max-width: 100%;
+    max-width: $default-max-width;
     padding: 15px 0px 15px 10px;
     border-bottom: 1px solid black;
-  }  
-
-  .head h1, .head span {
-    width: 100%;
-    font-weight: lighter;
-  }
-  
-  .head span{
-    font-size: .9em;
+    h1, span {
+      width: $default-width;
+      font-weight: lighter;
+    }
+    span{
+      font-size: .9em;
+    }
   }
 
-  .container {
-    max-width: 100%;
+  .accordion {
+    max-width: $default-max-width;
     margin: 0px auto;
+    .question .answer .row {
+      width: $default-width;
+    }
+    .question {
+      padding: 0px 0px 5px 0px;
+      font-size: 1.2em;
+    }
+    .answer {
+      padding: 0px 0px 20px 0px;
+      font-size: .9em;
+    }
   }
-
-  .question .answer .row {
-    width: 100%;
-  }
-
-  .question {
-    padding: 0px 0px 5px 0px;
-    font-size: 1.2em;
-  }
-  
-  .answer {
-    padding: 0px 0px 20px 0px;
-    font-size: .9em;
-  }
-
 
 }

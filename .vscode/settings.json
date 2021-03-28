@@ -9,5 +9,17 @@
     "**/lib-amd": true,
     "src/**/*.scss.ts": true
   },
-  "typescript.tsdk": ".\\node_modules\\typescript\\lib"
+  "typescript.tsdk": ".\\node_modules\\typescript\\lib",
+  "coloredRegions.namedColors": {    
+    "imports": "rgba(0, 255, 17, 0.1)",    
+    "variables": "rgba(255, 179, 0, 0.1)",    
+    "constants": "rgba(113, 250, 131, 0.1)",    
+    "interfaces": "rgba(229, 255, 204, 0.1)",    
+    "SharePointQueriesCode": "rgba(0,125,125, 0.1)",    
+    "QueryData": "rgba(0,125,125, 0.1)",    
+    "DisplayCode": "rgba(255, 0, 0, 0.1)",    
+    "AsyncCode": "rgba(0, 255, 0, 0.1)",    
+    "RenderCode": "rgba(0, 0, 255, 0.1)",    
+    "GenericCode": "rgba(0, 239, 255, 0.1)"  
+  }
 }
